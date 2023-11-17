@@ -8,9 +8,9 @@ outputs:
     description: project name
     value: ${{ steps.variable.outputs.project_name }}
 
-  sha:
+  commit_sha:
     description: short github commit sha
-    value: ${{ steps.variable.outputs.sha }}
+    value: ${{ steps.variable.outputs.commit_sha }}
 
 
 runs:
@@ -39,7 +39,7 @@ runs:
         GITREPO_NAME=${{ github.repository }}
         project_name=${GITREPO_NAME#*/}
         echo "project_name=${project_name}" >> $GITHUB_OUTPUT        
-        echo "sha=$(echo ${{ github.sha }}|cut -c 1-7)" >> $GITHUB_OUTPUT
+        echo "commit_sha=$(echo ${{ github.sha }}|cut -c 1-7)" >> $GITHUB_OUTPUT
       shell: bash 
 
 
