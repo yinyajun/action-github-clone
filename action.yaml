@@ -13,19 +13,19 @@ runs:
   using: composite
   steps:
     - name: checkout code
-    id: checkout
-    run: |
-      GITREPO_NAME=${{ github.repository }}
-      project_name=${GITREPO_NAME#*/}
-      echo "::set-output name=project_name::${project_name}"
-      if [ -z "$(ls -A ./|grep -v .git)" ]
-        then
-          cd .. && rm -rf ${project_name}
-          git clone git@github.com:${{ github.repository }}
-          cd -
-          git checkout ${{ github.ref_name }}
-        else
-          git pull
-          git checkout ${{ github.ref_name }}
-        fi
-      shell: bash
+      id: checkout
+      run: |
+        GITREPO_NAME=${{ github.repository }}
+        project_name=${GITREPO_NAME#*/}
+        echo "::set-output name=project_name::${project_name}"
+        if [ -z "$(ls -A ./|grep -v .git)" ]
+          then
+            cd .. && rm -rf ${project_name}
+            git clone git@github.com:${{ github.repository }}
+            cd -
+            git checkout ${{ github.ref_name }}
+          else
+            git pull
+            git checkout ${{ github.ref_name }}
+          fi
+        shell: bash
