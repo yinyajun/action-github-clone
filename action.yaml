@@ -6,9 +6,6 @@ branding:
   color: blue
 
 
-outputs:
-  prj_name: ${{ steps.cpc.outputs.prj_name }}
-
 
 
 runs:
@@ -19,7 +16,7 @@ runs:
       run: |
         GITREPO_NAME=${{ github.repository }}
         prj_name=${GITREPO_NAME#*/}
-        echo "prj_name=${prj_name}" >> $GITHUB_OUTPUT
+        echo "prj_name=${prj_name}" 
         if [ -z "$(ls -A ./|grep -v .git)" ]
         then
           cd ..
