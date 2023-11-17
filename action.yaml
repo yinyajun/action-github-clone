@@ -40,4 +40,6 @@ runs:
         project_name=${GITREPO_NAME#*/}
         echo "project_name=${project_name}" >> $GITHUB_OUTPUT        
         echo "sha=$(echo ${{ github.sha }}|cut -c 1-7)" >> $GITHUB_OUTPUT
+      shell: bash 
+
 
