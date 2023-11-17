@@ -3,16 +3,6 @@ description: github clone
 author: yyj
 
 
-outputs:
-  project_name:
-    description: project name
-    value: ${{ steps.variable.outputs.project_name }}
-
-  commit_sha:
-    description: short github commit sha
-    value: ${{ steps.variable.outputs.commit_sha }}
-
-
 runs:
   using: composite
   steps:
@@ -32,14 +22,3 @@ runs:
           git checkout ${{ github.ref_name }}
         fi
       shell: bash
-
-    - name: variable
-      id: variable
-      run: |
-        GITREPO_NAME=${{ github.repository }}
-        project_name=${GITREPO_NAME#*/}
-        echo "project_name=${project_name}" >> $GITHUB_OUTPUT        
-        echo "commit_sha=$(echo ${{ github.sha }}|cut -c 1-7)" >> $GITHUB_OUTPUT
-      shell: bash 
-
-
