@@ -4,7 +4,9 @@ author: yyj
 
 
 outputs:
-  project_name: ${{ steps.checkout.outputs.project_name }}
+  project_name:
+    description: project name
+    value: ${{ steps.checkout.outputs.project_name }}
 
 
 runs:
