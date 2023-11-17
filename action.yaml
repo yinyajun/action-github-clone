@@ -28,4 +28,4 @@ runs:
             git pull
             git checkout ${{ github.ref_name }}
           fi
-        shell: bash
+      shell: bash
