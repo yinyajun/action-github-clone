@@ -6,7 +6,11 @@ author: yyj
 outputs:
   project_name:
     description: project name
-    value: ${{ steps.checkout.outputs.project_name }}
+    value: ${{ steps.variable.outputs.project_name }}
+
+  sha:
+    description: short github commit sha
+    value: ${{ steps.variable.outputs.sha }}
 
 
 runs:
@@ -17,15 +21,23 @@ runs:
       run: |
         GITREPO_NAME=${{ github.repository }}
         project_name=${GITREPO_NAME#*/}
-        echo "project_name=${project_name}" >> $GITHUB_OUTPUT
         if [ -z "$(ls -A ./|grep -v .git)" ]
-          then
-            cd .. && rm -rf ${project_name}
-            git clone git@github.com:${{ github.repository }}
-            cd -
-            git checkout ${{ github.ref_name }}
-          else
-            git pull
-            git checkout ${{ github.ref_name }}
-          fi
+        then
+          cd .. && rm -rf ${project_name}
+          git clone git@github.com:${{ github.repository }}
+          cd -
+          git checkout ${{ github.ref_name }}
+        else
+          git pull
+          git checkout ${{ github.ref_name }}
+        fi
       shell: bash
+
+    - name: variable
+      id: variable
+      run: |
+        GITREPO_NAME=${{ github.repository }}
+        project_name=${GITREPO_NAME#*/}
+        echo "project_name=${project_name}" >> $GITHUB_OUTPUT        
+        echo "sha=$(echo ${{ github.sha }}|cut -c 1-7)" >> $GITHUB_OUTPUT
+
