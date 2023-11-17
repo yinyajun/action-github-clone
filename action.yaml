@@ -17,7 +17,7 @@ runs:
       run: |
         GITREPO_NAME=${{ github.repository }}
         project_name=${GITREPO_NAME#*/}
-        echo "::set-output name=project_name::${project_name}"
+        echo "project_name=${project_name}" >> $GITHUB_OUTPUT
         if [ -z "$(ls -A ./|grep -v .git)" ]
           then
             cd .. && rm -rf ${project_name}
