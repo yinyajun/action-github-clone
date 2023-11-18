@@ -3,11 +3,16 @@ description: github clone
 author: yyj
 
 
+inputs:
+  branch:
+    description: branch
+    default: ${{ github.ref_name }}
+
+
 runs:
   using: composite
   steps:
-    - name: checkout code
-      id: checkout
+    - name: pull
       run: |
         GITREPO_NAME=${{ github.repository }}
         project_name=${GITREPO_NAME#*/}
@@ -16,9 +21,12 @@ runs:
           cd .. && rm -rf ${project_name}
           git clone git@github.com:${{ github.repository }}
           cd -
-          git checkout ${{ github.ref_name }}
         else
           git pull
-          git checkout ${{ github.ref_name }}
         fi
       shell: bash
+
+    - name: checkout
+      run: git checkout ${{ inputs.branch }}
+      shell: bash
+
